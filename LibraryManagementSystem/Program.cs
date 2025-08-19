@@ -1,5 +1,6 @@
 
 using Data.Models;
+using LibraryManagementSystem_.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -12,6 +13,7 @@ namespace LibraryManagementSystem_
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddScoped<IBookService, BookService>();
 
             builder.Services.AddControllers();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -20,7 +22,13 @@ namespace LibraryManagementSystem_
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            
+
+
             var app = builder.Build();
+
+
+            
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
