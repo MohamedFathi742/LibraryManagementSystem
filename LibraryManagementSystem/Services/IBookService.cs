@@ -6,6 +6,7 @@ namespace LibraryManagementSystem_.Service;
 public interface IBookService
 {
     Task<IEnumerable<Book>> GetAllAsync();
+    Task<IEnumerable<Book>> PaginationAsync(int pageSize, int pageNum);
     Task<Book> GetByIdAsync(int id);
     Task< Book> AddAsync(Book book);
     Task UpdateAsync(Book book,int id);

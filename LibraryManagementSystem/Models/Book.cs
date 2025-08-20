@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Data.Models;
 
@@ -20,6 +21,6 @@ public partial class Book
     public string BookStatus { get; set; }
 
     public DateTime? CreatedAt { get; set; }
-
+    [JsonIgnore (Condition = JsonIgnoreCondition.WhenWritingNull)]
     public virtual ICollection<Borrowing> Borrowings { get; set; } = new List<Borrowing>();
 }

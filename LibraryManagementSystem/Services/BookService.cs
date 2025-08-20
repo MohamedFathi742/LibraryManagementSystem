@@ -14,7 +14,23 @@ public class BookService(ApplicationDbContext context) : IBookService
        var book= await _context.Books.AsNoTracking().ToListAsync();
         return book;
     }
+    public async Task<IEnumerable<Book>> PaginationAsync(int pageSize,int pageNum)
+    {
+        if (pageSize <= 0) pageSize = 10;
 
+        if (pageNum <= 0) pageNum = 1;
+       
+        var totalCount = await _context.Books.CountAsync();
+
+        var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+        var result=await _context.Books
+            .Skip((pageNum - 1)*pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+            
+        return result;
+       
+    }
     public async Task<Book> GetByIdAsync(int id)
     {
       var book =await _context.Books.FindAsync(id);
@@ -37,6 +53,8 @@ public class BookService(ApplicationDbContext context) : IBookService
             result.Auther = book.Auther;
             result.BookStatus = book.BookStatus;
             result.CreatedAt = book.CreatedAt;
+            result.PuplishedYear = book.PuplishedYear;
+                             
            
 
         }
@@ -52,8 +70,5 @@ public class BookService(ApplicationDbContext context) : IBookService
         
     }
 
- 
-
-
-  
+   
 }

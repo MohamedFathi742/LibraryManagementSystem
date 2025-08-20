@@ -20,6 +20,17 @@ public class BooksController(IBookService bookService) : ControllerBase
     
     
     }
+    [HttpGet("pagination")]
+    public async Task< IActionResult> Pagination([FromQuery] int pageSize, [FromQuery]int pageNum)
+    {
+        var result=await _bookService.PaginationAsync(pageSize,pageNum);
+
+        return Ok(result);
+    
+    
+    
+    }
+
     [HttpGet("{id}")]
     public async Task< IActionResult> GetById(int id)
     {
